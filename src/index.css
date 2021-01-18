@@ -1,13 +1,162 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+
+  margin: 2% 10% 2% 10%;
+  padding: 2%;
+}
+
+.nav-li {
+  display: inline-flex;
+  border: 1px solid black;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+nav li {
+  padding: 1.7rem;
+}
+.nav-a {
+  text-decoration: none;
+}
+
+nav div {
+  border: 1px solid green;
+}
+
+.border {
+  border: 1px solid blue;
+}
+.mr {
+  margin-right: 1.7rem;
+}
+.my-m {
+  margin: 0 0.8rem 0 0.8rem;
+}
+.py-m {
+  padding: 0 0.8rem 0 0.8rem;
+}
+.py-l {
+  padding: 0 1.2rem 0 1.2rem;
+}
+.pt {
+  padding-top: 1rem;
+}
+.d-flex {
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+  align-content: center;
+  width: auto;
+}
+.ml {
+  margin-left: 2rem;
+}
+
+.rounded-full {
+  border: 1px solid blue;
+  border-radius: 0.5rem;
+  width: 1.5rem;
+  height: 1rem;
+}
+.full-height {
+  height: 100vh;
+}
+
+.align-center {
+  align-items: center;
+}
+.text-center {
+  text-align: center;
+}
+
+.m {
+  margin: 1rem;
+}
+
+.p {
+  padding: 1rem;
+}
+
+.input {
+  width: auto;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-size: 1.4rem;
+}
+input:focus {
+  border-color: green;
+}
+.full-w {
+  width: 30rem;
+  height: 2.8rem;
+}
+.round-sm {
+  border-radius: 0.2rem;
+}
+.round-l {
+  border-radius: 0.8rem;
+}
+.bg-red {
+  background-color: #fd0122;
+}
+.bg-gray {
+  background-color: #ede9e9d5;
+  opacity: 700;
+}
+.border-gray {
+  border: 1px solid rgb(110, 109, 109);
+}
+input:active {
+  border: 1px solid rgb(110, 109, 109);
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-content: center;
+}
+.text-white {
+  color: white;
+}
+.text-bold {
+  font-weight: bold;
+}
+.self-center {
+  align-self: center;
+}
+.text-md {
+  font-size: larger;
+  font-weight: 500;
+}
+
+.text-black {
+  color: black;
+}
+
+.text-red {
+  color: red;
+  text-decoration: underline;
+}
+.mt {
+  margin-top: 0.5rem;
+}
+
+.btn {
+  padding: 1em 2em;
+  border-radius: 30px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
 }
