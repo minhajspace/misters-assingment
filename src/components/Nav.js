@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 
-
 const Nav = () => {
     const history = useHistory()
     const email = cookies.get("email")
@@ -49,7 +48,7 @@ const Nav = () => {
 
 const mapStateToProps = (state) => {
     return {
-        state: state
+        authData: state.authData
     }
 }
 

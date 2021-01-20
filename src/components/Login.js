@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Nav from './Nav'
-import { NavLink, Redirect } from 'react-router-dom'
-import { useCookies } from 'react-cookie';
+import { NavLink, } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { login_user } from '../redux/actions/index'
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
@@ -22,17 +20,17 @@ class Login extends React.Component {
 
     handleLogin = () => {
 
-        const { authData } = this.props.state
+        const { authData } = this.props.authData
         const { email, password } = this.state
-        const maxAge = 10 * 24 * 60 * 60
         authData.map((value) => {
-            if (value.email === this.state.email) {
-
-            } else { this.setState(prevState => ({ error: { ...prevState.error, email: "your email is not present in our data base please create a account first" } })) }
-
+            console.log(email, value.email)
+            if (value.email === email) {
+                if (value.password === password) {
+                    cookies.set('email', email);
+                    this.props.history.push('/dashboard')
+                } else { this.setState(pervState => ({ error: { ...pervState.error, password: "Incorrent Password" } })) }
+            } else { this.setState(pervState => ({ error: { ...pervState.error, email: "Email is not Registerd" } })) }
         })
-        console.log(this.state)
-
     }
     render() {
 
@@ -64,6 +62,7 @@ class Login extends React.Component {
                                     value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })}
                                     required
                                 />
+                                    <p className="mt text-red">{this.state.error.password}</p>
                                 </div>
                             </div>
                             <div className="m">
@@ -85,8 +84,7 @@ class Login extends React.Component {
 
 const mapStatetoProps = (state) => {
     return {
-        login: state.loginReducer,
-        state: state.signupReducer
+        authData: state.signupReducer
     }
 }
-export default connect(mapStatetoProps, { login_user })(Login)
+export default connect(mapStatetoProps)(Login)

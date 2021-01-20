@@ -9,22 +9,7 @@ const Signup = (props) => {
     const [authDetails, setAuthDetails] = useState({ email: "", password: "", confirmPassword: "" })
     const [error, setError] = useState({ email: "", password: "" })
 
-
-    const validate = () => {
-        let error = {}
-        if (!authDetails.email.trim()) {
-            error.email = "Email is Required"
-        } else if (!/\S+@\S+\.\S+/.test(authDetails.email)) {
-            error.email = "Invalid Email"
-        }
-        if (!authDetails.password.trim()) error.password = "Password is Required"
-        else if (authDetails.password.length < 5) error.password = "Passwrod lenght should be 5"
-        if (authDetails.password.trim() !== authDetails.confirmPassword.trim()) error.confirmPassword = "password is not same"
-        console.log(error)
-    }
-
     const handleSignup = (e) => {
-
         e.preventDefault()
         const item = {
             email: authDetails.email,
@@ -33,9 +18,7 @@ const Signup = (props) => {
         }
         localStorage.setItem('user', JSON.stringify(item));
         if (authDetails.email.trim()) {
-
             if (/\S+@\S+\.\S+/.test(authDetails.email)) {
-
                 if (authDetails.password.length > 7 && authDetails.confirmPassword && authDetails.password === authDetails.confirmPassword) {
                     console.log(authDetails)
                     props.signup_user(item)
@@ -51,7 +34,7 @@ const Signup = (props) => {
         } else {
             setError({ ...error, email: "Email is required" })
         }
-        console.log(error)
+
     }
     return (
         <>
