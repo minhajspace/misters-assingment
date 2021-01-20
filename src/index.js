@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import store from './components/redux/store/reduxStore'
+import store from './redux/store/reduxStore'
 
 
 ReactDOM.render(

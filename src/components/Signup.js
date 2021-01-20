@@ -1,75 +1,126 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Nav from './Nav'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signup_user } from '../components/redux/actions/index'
+import { signup_user } from '../redux/actions/index'
 
 
-class Signup extends React.Component {
-    state = {
-        UserDetails: [],
-        email: "",
-        password: "",
-        confirmPassword: ""
+const Signup = (props) => {
+    const [authDetails, setAuthDetails] = useState({ email: "", password: "", confirmPassword: "" })
+    const [error, setError] = useState({ email: "", password: "" })
+
+
+    const validate = () => {
+        let error = {}
+        if (!authDetails.email.trim()) {
+            error.email = "Email is Required"
+        } else if (!/\S+@\S+\.\S+/.test(authDetails.email)) {
+            error.email = "Invalid Email"
+        }
+        if (!authDetails.password.trim()) error.password = "Password is Required"
+        else if (authDetails.password.length < 5) error.password = "Passwrod lenght should be 5"
+        if (authDetails.password.trim() !== authDetails.confirmPassword.trim()) error.confirmPassword = "password is not same"
+        console.log(error)
     }
 
-    handleSignup = (e) => {
+    const handleSignup = (e) => {
+
         e.preventDefault()
         const item = {
-            email: this.state.email,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword
+            email: authDetails.email,
+            password: authDetails.password,
+            confirmPassword: authDetails.confirmPassword
         }
-        this.props.signup_user(item)
+        localStorage.setItem('user', JSON.stringify(item));
+        if (authDetails.email.trim()) {
 
+            if (/\S+@\S+\.\S+/.test(authDetails.email)) {
 
+                if (authDetails.password.length > 7 && authDetails.confirmPassword && authDetails.password === authDetails.confirmPassword) {
+                    console.log(authDetails)
+                    props.signup_user(item)
+                    setAuthDetails({ email: "", password: "", confirmPassword: "" })
+                    setError({ email: "", password: "" })
+                } else {
+                    setError({ ...error, password: "Password length should be 8  and password and confirm password should be same " })
+                }
+            } else {
+                setError({ ...error, email: "Invalid Email" })
+            }
+
+        } else {
+            setError({ ...error, email: "Email is required" })
+        }
+        console.log(error)
     }
-    render() {
-
-        return (
-            <>
-                <Nav />
+    return (
+        <>
+            <Nav />
+            <form onSubmit={handleSignup}>
                 <div className="flex justify-center align-center">
                     <div className=" d-flex">
-                        <div className="m self-center"><span className="text-center text-md">Sign up</span></div>
+                        <div className="m self-center"><span className="text-center text-md extra-bold">Sign up</span></div>
                         <div className="r">
                             <div className="m">
                                 <lable className="">Email</lable>
-                                <div><input className="full-w round-sm bg-gray border-gray mt text-md " value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })}></input></div>
+                                <div>
+                                    <input
+                                        type="email"
+                                        className="full-w round-sm bg-gray border-gray mt text-md outline-none "
+                                        value={authDetails.email}
+                                        onChange={(e) => setAuthDetails({ ...authDetails, email: e.target.value })}
+                                        required
+                                    />
+                                    <p className="mt text-red">{error.email}</p>
+                                </div>
                             </div>
                             <div className="m">
                                 <lable className="mb">Password</lable>
-                                <div><input className="full-w round-sm bg-gray border-gray mt text-md" value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })}></input></div>
+                                <div><input
+                                    className="full-w round-sm bg-gray border-gray mt text-md outline-none "
+                                    type="password"
+                                    value={authDetails.password}
+                                    onChange={(e) => setAuthDetails({ ...authDetails, password: e.target.value })}
+                                    required />
+                                    <p className="mt text-red">{error.password}</p>
+                                </div>
                             </div>
                             <div className="m">
                                 <lable className="mb">Confirm Password</lable>
-                                <div><input className="full-w round-sm bg-gray border-gray mt text-md" value={this.state.confirmPassword} onChange={(e) => this.setState({ confirmPassword: e.target.value })}></input></div>
+                                <div>
+                                    <input
+                                        className="full-w round-sm bg-gray border-gray mt text-md outline-none"
+                                        type="password"
+                                        value={authDetails.confirmPassword}
+                                        onChange={(e) => setAuthDetails({ ...authDetails, confirmPassword: e.target.value })}
+                                        required />
+                                    <p className="mt text-red">{error.password}</p>
+                                </div>
                             </div>
                             <div className="m">
-                                <div><button className="full-w round-l bg-red text-white text-bold" onClick={this.handleSignup}>SIGN UP</button>
+                                <div><button className="full-w round-l bg-red text-white text-bold outline-none border-none" onClick={handleSignup}>SIGN UP</button>
                                 </div>
                             </div >
                             <div className="m text-md">
-                                <p className="m">Already have an account ?  <span ><NavLink className="text-red" to="/login">Sign in </NavLink></span></p>
+                                <p className="m">Already have an account ?  <span ><NavLink className="text-red text-underline" to="/login">Sign in </NavLink></span></p>
                             </div>
 
                         </div>
 
                     </div>
                 </div>
-            </>
-        )
-    }
+            </form>
+        </>
+    )
+
 }
 
 
 const mapStatetoProps = (state) => {
     return {
-        state: state
+        authData: state.signupReducer
+
     }
 }
-
-
-
 
 export default connect(mapStatetoProps, { signup_user })(Signup)

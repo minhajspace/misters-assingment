@@ -1,59 +1,92 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Nav from './Nav'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import { useCookies } from 'react-cookie';
 import { connect } from 'react-redux'
-
-const Login = (props) => {
-    const [authDetails, setAuthDetails] = useState({
-        email: "", password: ""
-    })
-    const [cookies, setCookie] = useCookies(['email']);
+import { login_user } from '../redux/actions/index'
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 
-
-    const handleLogin = () => {
-        const maxAge = 10 * 24 * 60 * 60
-        setCookie("email", authDetails.email, { maxAge })
-        setCookie("password", authDetails.password, { maxAge })
+class Login extends React.Component {
+    constructor(props) {
+        super(props)
+        const email = cookies.get("email")
+        if (email) this.props.history.push('/dashboard')
+        this.state = {
+            email: "",
+            password: "",
+            error: {}
+        }
     }
-    return (
-        <>
-            <Nav />
-            <div className="flex justify-center align-center">
-                <div className=" d-flex">
-                    <div className="m self-center"><span className="text-center text-md">Login</span></div>
-                    <div className="r">
-                        <div className="m ">
-                            <lable className=" mb">Email</lable>
-                            <div><input className="full-w round-sm bg-gray border-gray" value={authDetails.email} onChange={(e) => setAuthDetails({ ...authDetails, email: e.target.value })} ></input></div>
-                        </div>
-                        <div className="m">
-                            <lable className="mb">Password</lable>
-                            <div><input className="full-w round-sm bg-gray border-gray" value={authDetails.password} onChange={(e) => setAuthDetails({ ...authDetails, password: e.target.value })} ></input></div>
-                        </div>
-                        <div className="m">
-                            <div><button className="full-w round-l bg-red text-white text-bold" onClick={handleLogin}>LOGIN</button>
+
+    handleLogin = () => {
+
+        const { authData } = this.props.state
+        const { email, password } = this.state
+        const maxAge = 10 * 24 * 60 * 60
+        authData.map((value) => {
+            if (value.email === this.state.email) {
+
+            } else { this.setState(prevState => ({ error: { ...prevState.error, email: "your email is not present in our data base please create a account first" } })) }
+
+        })
+        console.log(this.state)
+
+    }
+    render() {
+
+        return (
+            <>
+                <Nav />
+                <div className="flex justify-center align-center">
+                    <div className=" d-flex">
+                        <div className="m self-center"><span className="text-center text-md extra-bold">Login</span></div>
+                        <div className="r">
+                            <div className="m ">
+                                <lable className=" mb">Email</lable>
+                                <div>
+                                    <input
+                                        className="full-w round-sm bg-gray border-gray outline-none"
+                                        value={this.state.email} onChange={(e) => this.setState({ email: e.target.value })}
+                                        type="email"
+                                        required
+                                        name=""
+                                    />
+                                    <p className="mt text-red">{this.state.error.email}</p>
+                                </div>
                             </div>
-                        </div >
-                        <div className="m text-md">
-                            <p className="m">Don't have an account ?<span className="text-red"><NavLink to="/signup">Sign up </NavLink></span></p>
+                            <div className="m">
+                                <lable className="mb">Password</lable>
+                                <div><input
+                                    className="full-w round-sm bg-gray border-gray outline-none"
+                                    type="password"
+                                    value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })}
+                                    required
+                                />
+                                </div>
+                            </div>
+                            <div className="m">
+                                <div><button className="full-w round-l bg-red text-white text-bold outline-none border-none" onClick={this.handleLogin}>LOGIN</button>
+                                </div>
+                            </div >
+                            <div className="m text-md">
+                                <p className="m">Don't have an account ?<span><NavLink className="text-red text-underline" to="/signup">Sign up </NavLink></span></p>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    }
 }
 
 const mapStatetoProps = (state) => {
     return {
-        state: state
+        login: state.loginReducer,
+        state: state.signupReducer
     }
 }
-
-
-
-export default connect(mapStatetoProps)(Login)
+export default connect(mapStatetoProps, { login_user })(Login)

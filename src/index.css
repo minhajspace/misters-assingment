@@ -5,19 +5,19 @@
 
 .flex {
   display: flex;
-  flex-flow: row wrap;
-
-  margin: 2% 10% 2% 10%;
-  padding: 2%;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .nav-li {
   display: inline-flex;
-  border: 1px solid black;
   list-style: none;
 }
 a {
   text-decoration: none;
+  color: gray;
+  font-weight: 400;
 }
 nav li {
   padding: 1.7rem;
@@ -33,11 +33,18 @@ nav div {
 .border {
   border: 1px solid blue;
 }
-.mr {
-  margin-right: 1.7rem;
+.mr-l {
+  margin-right: 10rem;
 }
+.mr {
+  margin-right: 2rem;
+}
+
 .my-m {
   margin: 0 0.8rem 0 0.8rem;
+}
+.mx-m {
+  margin: 0.8 0 0.8 0;
 }
 .py-m {
   padding: 0 0.8rem 0 0.8rem;
@@ -48,6 +55,7 @@ nav div {
 .pt {
   padding-top: 1rem;
 }
+
 .d-flex {
   display: flex;
   justify-content: center;
@@ -102,10 +110,10 @@ input:focus {
   border-radius: 0.2rem;
 }
 .round-l {
-  border-radius: 0.8rem;
+  border-radius: 1.2rem;
 }
 .bg-red {
-  background-color: #fd0122;
+  background-color: #e8122e;
 }
 .bg-gray {
   background-color: #ede9e9d5;
@@ -144,7 +152,9 @@ input:active {
 }
 
 .text-red {
-  color: red;
+  color: red !important;
+}
+.text-underline {
   text-decoration: underline;
 }
 .mt {
@@ -152,11 +162,27 @@ input:active {
 }
 
 .btn {
-  padding: 1em 2em;
-  border-radius: 30px;
   text-align: center;
-  white-space: nowrap;
-  cursor: pointer;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 8rem;
+}
+
+.outline-none {
+  outline: none;
+}
+.border-none {
+  border: none;
+}
+
+.center {
+  justify-content: center;
+}
+.round-l:hover {
+  background-color: #f40726;
+}
+
+.extra-bold {
+  font-weight: 700;
+  font-size: 1.2rem;
 }
