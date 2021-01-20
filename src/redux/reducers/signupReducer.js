@@ -5,7 +5,6 @@ const initalState = {
 }
 
 export const signupReducer = (state = initalState, action) => {
-    console.log(state.authData)
     switch (action.type) {
         case SIGNUP_USER:
             const item = action.payload

@@ -16,11 +16,10 @@ const Signup = (props) => {
             password: authDetails.password,
             confirmPassword: authDetails.confirmPassword
         }
-        localStorage.setItem('user', JSON.stringify(item));
         if (authDetails.email.trim()) {
             if (/\S+@\S+\.\S+/.test(authDetails.email)) {
                 if (authDetails.password.length > 7 && authDetails.confirmPassword && authDetails.password === authDetails.confirmPassword) {
-                    console.log(authDetails)
+
                     props.signup_user(item)
                     setAuthDetails({ email: "", password: "", confirmPassword: "" })
                     setError({ email: "", password: "" })
